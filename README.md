@@ -15,5 +15,5 @@ Voici le rendu final du petit projet du jeu de morpion. Celui-ci a la possibilit
 ##Lancement du programme
 
 ```shell
-
+java -cp "target/morpion-1.0.0-SNAPSHOT-dist/*" fr.utln.flauret316.MorpionMain
 ```
