@@ -108,31 +108,31 @@
         </executions>
       </plugin>
 
-      <!-- Generate apidoc jar during package phase 
-           equivalent to maven javadoc:jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-		<version>${maven.plugin.javadoc.version}</version>
+<!--      &lt;!&ndash; Generate apidoc jar during package phase -->
+<!--           equivalent to maven javadoc:jar &ndash;&gt;-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--		<version>${maven.plugin.javadoc.version}</version>-->
 
-		<!-- Embedding Latex formulas within javadoc using MathJax-->
-		<configuration>
+<!--		&lt;!&ndash; Embedding Latex formulas within javadoc using MathJax&ndash;&gt;-->
+<!--		<configuration>-->
 
-          <additionalJOptions>
-            <additionalJOption>--allow-script-in-comments</additionalJOption>
-          </additionalJOptions>
-          <header>'&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</header>
-        </configuration>
+<!--          <additionalJOptions>-->
+<!--            <additionalJOption>&#45;&#45;allow-script-in-comments</additionalJOption>-->
+<!--          </additionalJOptions>-->
+<!--          <header>'&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</header>-->
+<!--        </configuration>-->
 
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>attach-javadocs</id>-->
+<!--            <goals>-->
+<!--              <goal>jar</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
 	  
 	  <!-- Software distribution -->
       <plugin>
