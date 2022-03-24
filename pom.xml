@@ -3,13 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.utln</groupId>
-  <artifactId>javafx</artifactId>
+  <artifactId>morpion</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>JavaFX Project</name>
-  <description>JavaFX project</description>
-  <url>https://www.seinturier.fr/</url>
+  <name>Morpion Project</name>
+  <description>Morpion project</description>
 
   <licenses>
     <license>
@@ -19,25 +18,6 @@
     </license>
   </licenses>
 
-  <developers>
-    <developer>
-      <id>jseinturier</id>
-      <name>Julien Seinturier</name>
-      <email>julien.seinturier@univ-tln.fr</email>
-      <url>http://www.seinturier.fr</url>
-      <organization>Université de Toulon</organization>
-      <organizationUrl>http://www.univ-tln.fr</organizationUrl>
-      <roles>
-        <role>architect</role>
-        <role>developer</role>
-      </roles>
-      <timezone>France/Paris</timezone>
-      <properties>
-        <!-- <picUrl>http://www.example.com/jdoe/pic</picUrl> -->
-      </properties>
-    </developer>
-  </developers>
-  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     
