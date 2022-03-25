@@ -1,6 +1,7 @@
 package fr.utln.flauret316.model;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Ceci est notre classe model du jeu du morpion. Vu que nous avons un petit projet,
@@ -21,7 +22,8 @@ public class MorpionModel {
         this.joueur1 = name1;
         this.joueur2 = name2;
         this.grille = new Integer[taille][taille];
-        this.joueurActuel = 1;
+        Random r = new Random();
+        this.joueurActuel = r.nextInt(2)+1;
         this.cpt = 0;
 
         for (Integer[] integers : grille) {

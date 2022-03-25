@@ -15,6 +15,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 /**
  * Une application de Morpion
  * @author Fabien LAURET
@@ -29,7 +31,7 @@ public class MorpionApplication extends Application {
 
    private final Label  joueur2;
 
-   private final Label victoire;
+   private final Label joueurTour;
 
    private final Label partie;
 
@@ -80,9 +82,9 @@ public class MorpionApplication extends Application {
 
       HBox btn = new HBox(btnPartie, btnRecom);
 
-      this.victoire = new Label();
+      this.joueurTour = new Label();
 
-      this.menu = new FlowPane(10,10, btn, jscore1, jscore2, pnbpartie,victoire);
+      this.menu = new FlowPane(10,10, btn, pnbpartie, jscore1, jscore2, joueurTour);
 
       this.grille = new TilePane();
 
@@ -91,8 +93,8 @@ public class MorpionApplication extends Application {
       this.scene = new Scene(disposition, 1080, 720);
    }
 
-   public Label getVictoire() {
-      return victoire;
+   public Label getJoueurTour() {
+      return joueurTour;
    }
 
    public Label getScore1() {
@@ -147,6 +149,9 @@ public class MorpionApplication extends Application {
       score2.setFont(Font.font(20));
       score2.setTextFill(Color.CHOCOLATE);
       score2.setAlignment(Pos.CENTER_RIGHT);
+      joueurTour.setFont(Font.font(15));
+      joueurTour.setTextFill(Color.CHOCOLATE);
+      joueurTour.setAlignment(Pos.CENTER);
       nbPartie.setFont(Font.font(20));
       nbPartie.setTextFill(Color.CHOCOLATE);
       nbPartie.setAlignment(Pos.CENTER_RIGHT);
@@ -161,12 +166,17 @@ public class MorpionApplication extends Application {
       btnRecom.setOnAction(evt ->
       {
          getGrille().getChildren().clear();
-         getVictoire().visibleProperty().setValue(false);
          setModel(new MorpionModel(model.getJoueur1(),model.getJoueur2(), model.getGrille().length));
          getGrille().setDisable(false);
          createGrille();
-         Integer partie = Integer.parseInt(getNbPartie().getText())+1;
-         getNbPartie().setText(partie.toString());
+         Integer partie1 = Integer.parseInt(getNbPartie().getText())+1;
+         getNbPartie().setText(partie1.toString());
+         if(model.getJoueurActuel() == 1){
+            getJoueurTour().setText("En attente "+model.getJoueur1()+"...");
+         }
+         else{
+            getJoueurTour().setText("En attente "+model.getJoueur2()+"...");
+         }
          btnRecom.setDisable(true);
       });
       menu.setAlignment(Pos.TOP_CENTER);
@@ -183,6 +193,12 @@ public class MorpionApplication extends Application {
          int x = (int) rect.getX();
          int y = (int) rect.getY();
          majGrille(x,y);
+         if(model.getJoueurActuel() == 1){
+            getJoueurTour().setText("En attente "+model.getJoueur1()+"...");
+         }
+         else{
+            getJoueurTour().setText("En attente "+model.getJoueur2()+"...");
+         }
          });
 
       stage.show();
@@ -223,15 +239,24 @@ public class MorpionApplication extends Application {
       fenetreParam.setTitle("Paramètre de la partie");
       fenetreParam.setScene(param);
 
+      txtJoueur1.textProperty().addListener((obs, oldText, newText) -> confirmer.setDisable(Objects.equals(newText, txtJoueur2.getText())));
+
+      txtJoueur2.textProperty().addListener((obs, oldText, newText) -> confirmer.setDisable(Objects.equals(newText, txtJoueur1.getText())));
+
       confirmer.setOnAction(actionEvent -> {
          getGrille().getChildren().clear();
-         getVictoire().visibleProperty().setValue(false);
          getGrille().setDisable(false);
          generationPartie(txtJoueur1.getText(), txtJoueur2.getText());
          setModel(new MorpionModel(txtJoueur1.getText(),txtJoueur2.getText(), Integer.parseInt(txtTaille.getText())));
          createGrille();
-         Integer partie = Integer.parseInt(getNbPartie().getText())+1;
-         getNbPartie().setText(partie.toString());
+         Integer partie2 = Integer.parseInt(getNbPartie().getText())+1;
+         getNbPartie().setText(partie2.toString());
+         if(model.getJoueurActuel() == 1){
+            getJoueurTour().setText("En attente "+model.getJoueur1()+"...");
+         }
+         else{
+            getJoueurTour().setText("En attente "+model.getJoueur2()+"...");
+         }
          fenetreParam.close();});
 
       annuler.setOnAction(evt -> fenetreParam.close());
@@ -326,11 +351,7 @@ public class MorpionApplication extends Application {
       createGrille();
 
       if(event == 1){
-         getVictoire().visibleProperty().setValue(true);
-         getVictoire().setText("Victoire de "+model.getJoueur1());
-         getVictoire().setFont(Font.font(20));
-         getVictoire().setTextFill(Color.CHOCOLATE);
-         getVictoire().setMaxSize(250,100);
+         victoireWindow(1);
          Integer score = Integer.parseInt(getScore1().getText())+1;
          getScore1().setText(score.toString());
          btnRecom.setDisable(false);
@@ -338,11 +359,7 @@ public class MorpionApplication extends Application {
 
       }
       if(event == 2){
-         getVictoire().visibleProperty().setValue(true);
-         getVictoire().setText("Victoire de "+model.getJoueur2());
-         getVictoire().setFont(Font.font(20));
-         getVictoire().setTextFill(Color.CHOCOLATE);
-         getVictoire().setMaxSize(250,100);
+         victoireWindow(2);
          Integer score = Integer.parseInt(getScore2().getText())+1;
          getScore2().setText(score.toString());
          btnRecom.setDisable(false);
@@ -350,13 +367,42 @@ public class MorpionApplication extends Application {
 
       }
       if (event == 3){
-         getVictoire().visibleProperty().setValue(true);
-         getVictoire().setText("Match nul");
-         getVictoire().setFont(Font.font(20));
-         getVictoire().setTextFill(Color.CHOCOLATE);
-         getVictoire().setMaxSize(250,100);
+         victoireWindow(3);
          btnRecom.setDisable(false);
          getGrille().setDisable(true);
       }
+   }
+
+   public void victoireWindow(int vict) {
+      Label  lblVictoire = new Label();
+      Button confirmer = new Button("Confirmer");
+      BorderPane disposition2 = new BorderPane();
+      Scene param = new Scene(disposition2,320,300);
+
+      if(vict == 1){
+         lblVictoire.setText("Victoire de "+model.getJoueur1());
+      }
+      if (vict == 2){
+         lblVictoire.setText("Victoire de "+model.getJoueur2());
+      }
+      if(vict == 3) {
+         lblVictoire.setText("Match nul");
+      }
+
+      lblVictoire.setFont(Font.font(30));
+      lblVictoire.setTextFill(Color.CHOCOLATE);
+      confirmer.setAlignment(Pos.CENTER);
+      disposition2.setBottom(confirmer);
+      disposition2.setCenter(lblVictoire);
+      disposition2.setStyle("-fx-background-color: #FAEBD7");
+
+      Stage fenetreVictoire = new Stage();
+
+      fenetreVictoire.setTitle("Victoire !");
+      fenetreVictoire.setScene(param);
+
+      confirmer.setOnAction(actionEvent -> fenetreVictoire.close());
+
+      fenetreVictoire.show();
    }
 }

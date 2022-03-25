@@ -6,9 +6,9 @@
 
 Voici le rendu final du petit projet du jeu de morpion. Celui-ci a la possibilité de :
 
-1. Créer une partie personnalisée en changeant la taille de la grille et le nom des joueurs,
-2. De relancer une partie avec les paramètres précédents,
-3. D'afficher le score de chaque joueur ainsi que le nombre de partie jouée.
+1. Créer une partie personnalisée en changeant la taille de la grille et le nom des joueurs (impossible de mettre le même nom),
+2. De relancer une partie avec les paramètres précédents avec un aléatoire sur le joueur qui commence,
+3. D'afficher à qui c'est le tour de jouer, le score de chaque joueur ainsi que le nombre de partie jouée.
 
 ***
 
